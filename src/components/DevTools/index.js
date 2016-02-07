@@ -7,6 +7,6 @@ export const DevTools = process.env.NODE_ENV === 'production'
   ? 'noscript'
   : createDevTools(
     <DockMonitor toggleVisibilityKey="ctrl-h" changePositionKey="ctrl-q">
-      <LogMonitor theme="tomorrow" preserveScrollTop={false} />
+      <LogMonitor theme="tomorrow" preserveScrollTop={false}/>
     </DockMonitor>
   );

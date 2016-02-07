@@ -24,15 +24,15 @@ function renderPage(store, props) {
   const App = () => (
     <Provider store={store}>
       <main>
-        <RouterContext {...props} />
-        <DevTools />
+        <RouterContext {...props}/>
+        <DevTools/>
       </main>
     </Provider>
   );
-  const app = {__html: renderToString(<App />)};
+  const app = {__html: renderToString(<App/>)};
   const data = {__html: `window.APP_DATA=${JSON.stringify(props)};`};
 
-  return renderToStaticMarkup(<Root app={app} data={data} />);
+  return renderToStaticMarkup(<Root app={app} data={data}/>);
 }
 
 function frontend(req, res) {

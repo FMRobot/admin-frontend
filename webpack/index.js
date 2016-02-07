@@ -8,7 +8,8 @@ const config = require('./config');
 
 const compiler = webpack([config('server'), config('app')]);
 
-const {LOG_LEVEL, NODE_ENV} = process.env;
+const LOG_LEVEL = process.env.LOG_LEVEL;
+const NODE_ENV = process.env.NODE_ENV;
 
 log.level = LOG_LEVEL || NODE_ENV === 'production' ? 'error' : 'silly';
 

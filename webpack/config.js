@@ -1,4 +1,10 @@
+const autoprefixer = require('autoprefixer');
 const path = require('path');
+const pcssImport = require('postcss-import');
+const pcssMixins = require('postcss-mixins');
+const pcssSimpleVars = require('postcss-simple-vars');
+const pcssNested = require('postcss-nested');
+const pcssColorFn = require('postcss-color-function');
 const w = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 
@@ -7,6 +13,18 @@ const autoloaded = {
   server: {
     log: 'npmlog',
   },
+};
+
+const cssLoaders = {
+  app: [
+    'postcss-loader',
+    'css-loader?modules',
+    'style-loader',
+  ],
+  server: [
+    'postcss-loader',
+    'css/locals?modules',
+  ],
 };
 
 const hmr = {
@@ -18,6 +36,8 @@ const externals = {
   app: null,
   server: [nodeExternals({whitelist: [hmr.server]})],
 };
+
+const mixinsDir = path.join(__dirname, '../src/lib/css-mixins');
 
 const target = {
   app: 'web',
@@ -39,12 +59,21 @@ module.exports = function config(scriptName) {
   }
 
 
-  /** Loaders */
-  const loaders = [
+  /** Preloaders */
+  const preLoaders = [
     {
       test: /\.js$/,
       exclude: /node_modules/,
       loader: 'babel-loader',
+    },
+  ];
+
+
+  /** Loaders */
+  const loaders = [
+    {
+      test: /\.css$/,
+      loaders: cssLoaders[scriptName].reverse(),
     },
   ];
 
@@ -59,7 +88,13 @@ module.exports = function config(scriptName) {
   } else {
     plugins.push(new w.NoErrorsPlugin());
     plugins.push(new w.optimize.DedupePlugin());
-    plugins.push(new w.optimize.UglifyJsPlugin());
+    plugins.push(new w.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        drop_console: true,
+        unsafe: true,
+      },
+    }));
   }
 
   plugins.push(new w.ProvidePlugin(Object.assign({}, autoloaded[scriptName])));
@@ -78,8 +113,22 @@ module.exports = function config(scriptName) {
     externals: externals[scriptName],
     devtool: DEV && 'source-map',
     module: {
+      preLoaders,
       loaders,
     },
     plugins,
+    postcss: () => [
+      pcssImport,
+      pcssMixins({mixinsDir}),
+      pcssSimpleVars({variables: require('../src/lib/cssVariables')}),
+      pcssNested,
+      pcssColorFn,
+      autoprefixer({
+        browsers: [
+          'last 2 versions',
+          'IE >= 9',
+        ],
+      }),
+    ],
   };
 };

@@ -1,4 +1,6 @@
-import React, {PropTypes} from 'react';
+import './styles.css';
+import {PropTypes} from 'react';
+import React from 'react';
 
 export const App = (props) => <div>{props.children}</div>;
 

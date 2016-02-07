@@ -14,8 +14,8 @@ match({history: browserHistory, routes}, (err, redirectTo, props) => {
   render(
     <Provider store={store}>
       <main>
-        <Router {...props} />
-        <DevTools />
+        <Router {...props}/>
+        <DevTools/>
       </main>
     </Provider>,
     document.getElementById('app')
