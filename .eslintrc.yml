@@ -20,6 +20,9 @@
 
   extends: "airbnb"
 
+  globals:
+    log: false
+
   rules:
     comma-dangle:
       - 1

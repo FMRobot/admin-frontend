@@ -5,13 +5,21 @@
   "author": "Anton Nemtsev",
   "license": "ISC",
   "scripts": {
-    "lint": "eslint source && stylelint source/**/*.css"
+    "lint": "eslint source && stylelint source/**/*.css",
+    "start": "node webpack"
   },
   "dependencies": {
     "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
-    "babel-preset-stage-0": "^6.3.13"
+    "babel-preset-stage-0": "^6.3.13",
+    "del": "^2.2.0",
+    "ms": "^0.7.1",
+    "npmlog": "^2.0.2",
+    "webpack": "^2.1.0-beta.4",
+    "webpack-node-externals": "^1.0.0",
+    "yargs": "^4.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.8",
