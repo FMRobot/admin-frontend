@@ -28,6 +28,22 @@
       - 1
       - "always-multiline"
 
+    new-cap:
+      - 2
+      - capIsNewExceptions:
+        - "Collection"
+        - "Iterable"
+        - "List"
+        - "Map"
+        - "OrderedMap"
+        - "OrderedSet"
+        - "Range"
+        - "Record"
+        - "Repeat"
+        - "Seq"
+        - "Set"
+        - "Stack"
+
     object-curly-spacing:
       - 1
       - "never"
